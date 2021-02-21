@@ -11,7 +11,7 @@ class App extends React.Component{
     const {lists} = this.props
     return (
       <div className={cls.app}>
-        {lists.map((elem)=>(<TrelloList key={elem.id} title={elem.title} cards={elem.cards}/>))}
+        {lists.map((elem)=>(<TrelloList listID={elem.id} key={elem.id} title={elem.title} cards={elem.cards}/>))}
         <TrelloActionButton list/>
       </div>
     );

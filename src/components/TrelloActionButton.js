@@ -1,5 +1,7 @@
 import { Button, Card, Icon } from "@material-ui/core";
 import React from "react";
+import { connect } from "react-redux";
+import { addList, addCard } from "./../actions";
 import TextareaAutosize from 'react-textarea-autosize';
 
 class TrelloActionButton extends React.Component{
@@ -45,10 +47,34 @@ class TrelloActionButton extends React.Component{
         })
     }
 
+    handleAddList = () =>{
+        const {dispatch} = this.props
+        const {text} = this.state
+        if(text){
+            this.setState({
+                text: ''
+            })
+            dispatch(addList(text))
+        }
+        return
+    }
+
+    handleAddCard = () =>{
+        const {dispatch, listID} = this.props
+        const {text} = this.state
+        if(text){
+            this.setState({
+                text: ''
+            })
+            dispatch(addCard(listID, text))
+        }
+        return
+    }
+
     renderForm =()=>{
         const { list } = this.props
         const placeHolder = list ? 'Enter list title' : 'Enter title for this card...'
-        const buttontitle = list ? 'Add List' : 'Add Title'
+        const buttontitle = list ? 'Add List' : 'Add Card'
         return(
             <div>
                 <Card style = {{
@@ -62,10 +88,12 @@ class TrelloActionButton extends React.Component{
                         outline: 'none',
                         border: 'none',
                         overflow:'hidden'
-                    }} autoFocus onBlur={this.closeForm} placeHolder={placeHolder} value={this.state.text} onChange={this.handleInputChange}/>
+                    }} autoFocus onBlur={this.closeForm} placeholder={placeHolder} value={this.state.text} onChange={this.handleInputChange}/>
                 </Card>
                 <div style={styles.formButtonGroup}>
-                <Button variant='contained' style={{
+                <Button 
+                    onMouseDown={list ? this.handleAddList : this.handleAddCard}
+                    variant='contained' style={{
                     color: 'white',
                     backgroundColor: '#5acc44' 
                 }}>{buttontitle}{' '}</Button>
@@ -97,4 +125,4 @@ const styles = {
     }
 }
 
-export default TrelloActionButton
+export default connect()(TrelloActionButton)
