@@ -4,34 +4,34 @@ let cardID = 4;
 const initialState = [
     {
         title: 'Last Episode',
-        id: 0,
+        id: `list-${0}`,
         cards: [
             {
                 title: 'wery last episode of star wars',
-                id: 0
+                id: `card-${0}`
             },
             {
                 title: 'нууууу прям wery last episode of star wars',
-                id: 1
+                id: `card-${1}`
             },
 
         ]
     },
     {
         title: 'Next Episode',
-        id: 1,
+        id: `list-${1}`,
         cards: [
             {
                 title: 'wery last episode of star wars',
-                id: 0
+                id: `card-${2}`
             },
             {
                 title: 'нууууу прям wery last episode of star wars',
-                id: 1
+                id: `card-${3}`
             },
             {
                 title: 'Всьо закінчилось то добре',
-                id: 2
+                id: `card-${4}`
             },
         ]
     }
@@ -43,14 +43,14 @@ const listReducer = (state = initialState, action) => {
             const newList = {
                 title: action.payload,
                 cards: [],
-                id: listID
+                id: `list-${listID}`
             }
             listID++;
             return [...state, newList]
         case CONSTANTS.ADD_CARD:
             const newCard = {
                 title: action.payload.text,
-                id: cardID
+                id: `card-${cardID}`
             }
             cardID++;
             const newState = state.map((list)=>{
